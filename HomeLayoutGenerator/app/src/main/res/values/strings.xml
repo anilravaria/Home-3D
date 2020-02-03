@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="button">Show Values</string>
+    <string name="view_2d_layout">View 2D Layout</string>
+    <string name="ft">ft</string>
+    <string name="scale">scale(Default:30)</string>
+    <string name="reset">Reset</string>
+    <string name="scaleButton">scale</string>
+    <string name="show_all">Show All</string>
+    <string name="room_length">Room Length</string>
+    <string name="room_width">Room Width</string>
+    <string name="export">Export</string>
+    <string name="room">Room</string>
+    <string name="inches">inches</string>
+    <string name="note_enter_all_the_values_in_the_textbox_in_inches"><b>Note</b> : Enter All the values in the textbox in <b><i>inches</i></b></string>
+    <string name="position_on_the_layout">Position On the Layout</string>
+    <string name="change_values">Change Values</string>
+    <string name="name">Name</string>
+    <string name="enter_the_name_of_furniture_to_add">Enter the Name of Furniture to add</string>
+
+
+
+
+</resources>

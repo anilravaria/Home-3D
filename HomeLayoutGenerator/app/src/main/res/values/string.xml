@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">HomeLayoutGenerator</string>
+
+    <string name="length_of_room">Length Of Room(ft)</string>
+    <string name="width_of_room">Width Of Room(ft)</string>
+    <string name="generate_layout">Generate Layout</string>
+    <string name="bed">Bed</string>
+    <string name="appliances">Appliances</string>
+    <string name="exit">Exit Application</string>
+    <string name="length">Length</string>
+    <string name="width">Width</string>
+    <string name="cupboard">Cupboard</string>
+    <string-array name="NumberofApplicances" >
+        <item>Add Furniture(s)</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="align">
+        <item>topleft</item>
+        <item>topcenter</item>
+        <item>topright</item>
+        <item>leftcenter</item>
+        <item>center</item>
+        <item>rightcenter</item>
+        <item>bottomleft</item>
+        <item>bottomcenter</item>
+        <item>bottomright</item>
+    </string-array>
+</resources>
