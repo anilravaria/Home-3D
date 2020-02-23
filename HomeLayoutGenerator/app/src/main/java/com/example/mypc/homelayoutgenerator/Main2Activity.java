@@ -5,12 +5,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,8 +19,8 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.Locale;
 
-import jxl.*;
 import jxl.Workbook;
+import jxl.WorkbookSettings;
 import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
@@ -37,11 +37,11 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        b2=(Button)findViewById(R.id.button2);
-        showall=(Button)findViewById(R.id.showall);
-        b3=(Button)findViewById(R.id.button3);
-        export=(Button)findViewById (R.id.button4);
-        t=(TextView)findViewById(R.id.textView3);
+        b2 = findViewById(R.id.button2);
+        showall = findViewById(R.id.showall);
+        b3 = findViewById(R.id.button3);
+        export = findViewById(R.id.button4);
+        t = findViewById(R.id.textView3);
         mydb = new DataBaseHelper(this);
         final Cursor res = mydb.getAllData();
         cursor=mydb.getExcelData ();
@@ -68,9 +68,9 @@ public class Main2Activity extends AppCompatActivity {
                             t.setText (sd.toString ());
                             File directory = new File(sd.getAbsolutePath());
                             //create directory if not exist
-                            if (!directory.isDirectory()) {
-                                directory.mkdirs();
-                            }
+//                            if (!directory.isDirectory()) {
+//                                directory.mkdirs();
+//                            }
                             try {
 
                                 //file path
@@ -126,7 +126,7 @@ public class Main2Activity extends AppCompatActivity {
                         }
                         }
                         catch (Exception e){
-
+                            e.printStackTrace();
                         }
 
 
@@ -149,17 +149,17 @@ public class Main2Activity extends AppCompatActivity {
                     return;
                 }
 
-                StringBuffer buffer = new StringBuffer();
+                StringBuilder buffer = new StringBuilder();
                while(res.moveToNext())
                 {
-                    buffer.append("Length of Room : " + res.getFloat (0) + "\n");
-                    buffer.append("Width of Room : " + res.getFloat (1) + "\n");
-                    buffer.append("Length of Bed : " + res.getFloat (2) + "\n");
-                    buffer.append("Width of Bed : " + res.getFloat (3) + "\n");
-                    buffer.append("Length of CupBoard : " + res.getFloat (4) + "\n");
-                    buffer.append("Width of CupBoard : " + res.getFloat (5) + "\n");
-                    buffer.append("Length of Appliance : " + res.getFloat (6) + "\n");
-                    buffer.append("Width of Appliance : " + res.getFloat (7) + "\n");
+                    buffer.append("Length of Room : ").append(res.getFloat(0)).append("\n");
+                    buffer.append("Width of Room : ").append(res.getFloat(1)).append("\n");
+                    buffer.append("Length of Bed : ").append(res.getFloat(2)).append("\n");
+                    buffer.append("Width of Bed : ").append(res.getFloat(3)).append("\n");
+                    buffer.append("Length of CupBoard : ").append(res.getFloat(4)).append("\n");
+                    buffer.append("Width of CupBoard : ").append(res.getFloat(5)).append("\n");
+                    buffer.append("Length of Appliance : ").append(res.getFloat(6)).append("\n");
+                    buffer.append("Width of Appliance : ").append(res.getFloat(7)).append("\n");
 
 
                 }
@@ -175,7 +175,7 @@ public class Main2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(res!=null&&res.getCount()>0) {
+                if (res.getCount() > 0) {
                     res.moveToLast();
                     arr[0]= (int) res.getFloat(0);
                     arr[1]=(int)res.getFloat(1);
@@ -208,7 +208,7 @@ public class Main2Activity extends AppCompatActivity {
                     return;
                 }
 
-                StringBuffer buffer = new StringBuffer();
+                StringBuilder buffer = new StringBuilder();
                /* while(res.moveToNext())
                 {
                     buffer.append("Length of Room : " + res.getFloat (0) + "\n");
@@ -223,14 +223,14 @@ public class Main2Activity extends AppCompatActivity {
 
                 }*/
                 res.moveToLast ();
-                buffer.append("Length of Room : " + res.getFloat (0) + "\n");
-                buffer.append("Width of Room : " + res.getFloat (1) + "\n");
-                buffer.append("Length of Bed : " + res.getFloat (2) + "\n");
-                buffer.append("Width of Bed : " + res.getFloat (3) + "\n");
-                buffer.append("Length of CupBoard : " + res.getFloat (4) + "\n");
-                buffer.append("Width of CupBoard : " + res.getFloat (5) + "\n");
-                buffer.append("Length of Appliance : " + res.getFloat (6) + "\n");
-                buffer.append("Width of Appliance : " + res.getFloat (7) + "\n");
+                buffer.append("Length of Room : ").append(res.getFloat(0)).append("\n");
+                buffer.append("Width of Room : ").append(res.getFloat(1)).append("\n");
+                buffer.append("Length of Bed : ").append(res.getFloat(2)).append("\n");
+                buffer.append("Width of Bed : ").append(res.getFloat(3)).append("\n");
+                buffer.append("Length of CupBoard : ").append(res.getFloat(4)).append("\n");
+                buffer.append("Width of CupBoard : ").append(res.getFloat(5)).append("\n");
+                buffer.append("Length of Appliance : ").append(res.getFloat(6)).append("\n");
+                buffer.append("Width of Appliance : ").append(res.getFloat(7)).append("\n");
 
                 // show all data
                 showMessage("Data", buffer.toString());

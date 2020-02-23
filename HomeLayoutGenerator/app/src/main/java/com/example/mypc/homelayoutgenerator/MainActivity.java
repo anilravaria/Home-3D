@@ -2,14 +2,19 @@ package com.example.mypc.homelayoutgenerator;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import static android.text.TextUtils.*;
+import static android.text.TextUtils.isEmpty;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,27 +33,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         myDB =new DataBaseHelper(this);
-        b1= (Button)findViewById(R.id.button);
-        reset= (Button)findViewById(R.id.reset);
-        s1=(Spinner)findViewById(R.id.spinner);
-        s2=(Spinner)findViewById(R.id.spinner2);
-        s3=(Spinner)findViewById(R.id.spinner3);
-        s4=(Spinner)findViewById(R.id.spinner4);
-        et=(EditText)findViewById(R.id.editText);
-        et2=(EditText)findViewById(R.id.editText2);
-        et3=(EditText)findViewById(R.id.editText3);
-        et4=(EditText)findViewById(R.id.editText4);
-        et5=(EditText)findViewById(R.id.editText5);
-        et6=(EditText)findViewById(R.id.editText6);
-        et7=(EditText)findViewById(R.id.editText7);
-        et8=(EditText)findViewById(R.id.editText8);
-        t1=(TextView)findViewById(R.id.textView6);
+        b1 = findViewById(R.id.button);
+        reset = findViewById(R.id.reset);
+        s1 = findViewById(R.id.spinner);
+        s2 = findViewById(R.id.spinner2);
+        s3 = findViewById(R.id.spinner3);
+        s4 = findViewById(R.id.spinner4);
+        et = findViewById(R.id.editText);
+        et2 = findViewById(R.id.editText2);
+        et3 = findViewById(R.id.editText3);
+        et4 = findViewById(R.id.editText4);
+        et5 = findViewById(R.id.editText5);
+        et6 = findViewById(R.id.editText6);
+        et7 = findViewById(R.id.editText7);
+        et8 = findViewById(R.id.editText8);
+        t1 = findViewById(R.id.textView6);
         /*t2=(TextView)findViewById(R.id.textView7);
         t3=(TextView)findViewById(R.id.textView8);*/
-        t16=(TextView)findViewById (R.id.textView16);
-        name1=(EditText)findViewById (R.id.editText9);
-        name2=(EditText)findViewById (R.id.editText10);
-        name3=(EditText)findViewById (R.id.editText11);
+        t16 = findViewById(R.id.textView16);
+        name1 = findViewById(R.id.editText9);
+        name2 = findViewById(R.id.editText10);
+        name3 = findViewById(R.id.editText11);
         name1.setVisibility (View.GONE);
         name2.setVisibility (View.GONE);
         name3.setVisibility (View.GONE);
@@ -201,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
                         wid_app=0;
                         Toast.makeText (getApplicationContext (), "" + len_room + wid_room + len_bed + wid_bed + len_cupboard + wid_cupboard + len_app + wid_app, Toast.LENGTH_SHORT).show ();
                         boolean result = myDB.insertData (len_room, wid_room, len_bed, wid_bed, len_cupboard, wid_cupboard, len_app, wid_app);
-                        if (result == true) {
+                        if (result) {
                             Toast.makeText (getApplicationContext (), "Data Inserted Successfully", Toast.LENGTH_SHORT).show ();
                         } else {
                             Toast.makeText (getApplicationContext (), "Data Insertion failed", Toast.LENGTH_SHORT).show ();
@@ -235,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
                         wid_app=0;
                         Toast.makeText (getApplicationContext (), "" + len_room + wid_room + len_bed + wid_bed + len_cupboard + wid_cupboard + len_app + wid_app, Toast.LENGTH_SHORT).show ();
                         boolean result = myDB.insertData (len_room, wid_room, len_bed, wid_bed, len_cupboard, wid_cupboard, len_app, wid_app);
-                        if (result == true) {
+                        if (result) {
                             Toast.makeText (getApplicationContext (), "Data Inserted Successfully", Toast.LENGTH_SHORT).show ();
                         } else {
                             Toast.makeText (getApplicationContext (), "Data Insertion failed", Toast.LENGTH_SHORT).show ();
@@ -278,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
                         wid_app=0;
                         Toast.makeText (getApplicationContext (), "" + len_room + wid_room + len_bed + wid_bed + len_cupboard + wid_cupboard + len_app + wid_app, Toast.LENGTH_SHORT).show ();
                         boolean result = myDB.insertData (len_room, wid_room, len_bed, wid_bed, len_cupboard, wid_cupboard, len_app, wid_app);
-                        if (result == true) {
+                        if (result) {
                             Toast.makeText (getApplicationContext (), "Data Inserted Successfully", Toast.LENGTH_SHORT).show ();
                         } else {
                             Toast.makeText (getApplicationContext (), "Data Insertion failed", Toast.LENGTH_SHORT).show ();
@@ -326,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
                         wid_app = Float.parseFloat (et8.getText ().toString ());
                         Toast.makeText (getApplicationContext (), "" + len_room + wid_room + len_bed + wid_bed + len_cupboard + wid_cupboard + len_app + wid_app, Toast.LENGTH_SHORT).show ();
                         boolean result = myDB.insertData (len_room, wid_room, len_bed, wid_bed, len_cupboard, wid_cupboard, len_app, wid_app);
-                        if (result == true) {
+                        if (result) {
                             Toast.makeText (getApplicationContext (), "Data Inserted Successfully", Toast.LENGTH_SHORT).show ();
                         } else {
                             Toast.makeText (getApplicationContext (), "Data Insertion failed", Toast.LENGTH_SHORT).show ();

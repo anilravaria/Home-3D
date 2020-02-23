@@ -2,9 +2,12 @@ package com.example.mypc.homelayoutgenerator;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
 import android.os.Bundle;
-import android.graphics.*;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Display;
 import android.view.View;
@@ -36,24 +39,24 @@ public class Main3Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
         //System.out.print (b+" "+c+" "+a);
-        s=(HorizontalScrollView)findViewById(R.id.scrollView);
-        l =(LinearLayout)findViewById(R.id.linearlayout);
-        scale=(Button)findViewById (R.id.button5);
-        editText=(EditText)findViewById (R.id.scale);
-        sb=(SeekBar)findViewById (R.id.seekBar);
-        t1=(TextView)findViewById (R.id.textView15);
-        t2=(TextView)findViewById (R.id.textView14);
-        t3=(TextView)findViewById (R.id.textView11);
-        t4=(TextView)findViewById (R.id.textView13);
+        s = findViewById(R.id.scrollView);
+        l = findViewById(R.id.linearlayout);
+        scale = findViewById(R.id.button5);
+        editText = findViewById(R.id.scale);
+        sb = findViewById(R.id.seekBar);
+        t1 = findViewById(R.id.textView15);
+        t2 = findViewById(R.id.textView14);
+        t3 = findViewById(R.id.textView11);
+        t4 = findViewById(R.id.textView13);
 
-        t6=(TextView)findViewById (R.id.textView2);
-        t7=(TextView)findViewById (R.id.textView9);
-        t8=(TextView)findViewById (R.id.textView10);
+        t6 = findViewById(R.id.textView2);
+        t7 = findViewById(R.id.textView9);
+        t8 = findViewById(R.id.textView10);
         t6.setText (MainActivity.n1);
         t7.setText (MainActivity.n2);
         t8.setText (MainActivity.n3);
 
-        changeValues=(Button)findViewById (R.id.button6);
+        changeValues = findViewById(R.id.button6);
         changeValues.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
@@ -149,7 +152,10 @@ public class Main3Activity extends AppCompatActivity {
         Paint paint = new Paint();
         int[] list;
         int left, top, bottom, right;
-        int Room_Pixel[], Bed_Pixel[], Cup_pixel[], App_pixel[];
+        int[] Room_Pixel;
+        int[] Bed_Pixel;
+        int[] Cup_pixel;
+        int[] App_pixel;
         int Room_len = RoomArray[0], Room_wid = RoomArray[1];
         int Bed_len = RoomArray[2], Bed_wid = RoomArray[3];
         int cup_len = RoomArray[4], cup_wid = RoomArray[5];
@@ -235,8 +241,8 @@ public class Main3Activity extends AppCompatActivity {
         protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
             //DisplayMetrics dm =getWindowManager()
-            int height =Phonewidth; // should be calculated based on the content
-            int width =PhoneHeight; // should be calculated based on the content
+            int height = Phonewidth; // should be calculated based on the content
+            int width = PhoneHeight; // should be calculated based on the content
             //System.out.print(PhoneHeight+" "+Phonewidth);
             setMeasuredDimension(width, height);
         }
@@ -244,8 +250,8 @@ public class Main3Activity extends AppCompatActivity {
         public int[] setR(int len, int wid) {
             left = 0;
             top = 0;
-            right =(int) len ;
-            bottom = (int) wid;
+            right = len;
+            bottom = wid;
             //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
             return new int[]{left, top, right, bottom};
@@ -254,100 +260,81 @@ public class Main3Activity extends AppCompatActivity {
 
         public int[] setBed(float len, float wid) {
 
-            if(b.equals ("topleft"))
-            {
-                left = 0;
-                top = 0;
-                right = (int) len;
-                bottom = (int) wid;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+            switch (b) {
+                case "topleft":
+                    left = 0;
+                    top = 0;
+                    right = (int) len;
+                    bottom = (int) wid;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(b.equals ("topcenter"))
-            {
-                left =(int)Room_len/4;
-                top = 0;
-                right = (int) len+Room_len/4;
-                bottom = (int) wid;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "topcenter":
+                    left = Room_len / 4;
+                    top = 0;
+                    right = (int) len + Room_len / 4;
+                    bottom = (int) wid;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(b.equals ("topright"))
-            {
-                left =(int) Room_len- (int)len;
-                top = 0;
-                right = (int) Room_len;
-                bottom = (int) wid;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "topright":
+                    left = Room_len - (int) len;
+                    top = 0;
+                    right = Room_len;
+                    bottom = (int) wid;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(b.equals ("leftcenter"))
-            {
-                left =(int) 0;
-                top = (int)Room_wid/4;
-                right = (int) len;
-                bottom = (int) wid+Room_wid/4;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "leftcenter":
+                    left = 0;
+                    top = Room_wid / 4;
+                    right = (int) len;
+                    bottom = (int) wid + Room_wid / 4;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(b.equals ("center"))
-            {
-                left = Room_len/4;
-                top = Room_wid/4;
-                right = (int) len+Room_len/4;
-                bottom = (int) wid+Room_wid/4;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "center":
+                    left = Room_len / 4;
+                    top = Room_wid / 4;
+                    right = (int) len + Room_len / 4;
+                    bottom = (int) wid + Room_wid / 4;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
+                    return new int[]{left, top, right, bottom};
+                case "rightcenter":
+                    left = Room_len - (int) len;
+                    top = Room_wid / 4;
+                    right = Room_len;
+                    bottom = (int) wid + Room_wid / 4;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-            else if(b.equals ("rightcenter"))
-            {
-                left =(int)Room_len-(int)len;
-                top =(int)Room_wid/4;
-                right = (int) Room_len;
-                bottom = (int) wid+Room_wid/4;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "bottomleft":
+                    left = 0;
+                    top = Room_wid - (int) wid;
+                    right = (int) len;
+                    bottom = Room_wid;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(b.equals ("bottomleft"))
-            {
-                left =(int) 0;
-                top = (int)Room_wid-(int)wid;
-                right = (int)len;
-                bottom = (int) Room_wid;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "bottomcenter":
+                    left = Room_len / 4;
+                    top = Room_wid - (int) wid;
+                    right = Room_len / 4 + (int) len;
+                    bottom = Room_wid;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(b.equals ("bottomcenter"))
-            {
-                left =(int)Room_len/4;
-                top = (int)Room_wid-(int)wid;
-                right = (int)Room_len/4+(int)len;
-                bottom = (int)Room_wid;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "bottomright":
+                    left = Room_len;
+                    top = Room_wid;
+                    right = Room_len - (int) len;
+                    bottom = Room_wid - (int) wid;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(b.equals ("bottomright"))
-            {
-                left =(int) Room_len;
-                top = Room_wid;
-                right = (int)Room_len-(int) len;
-                bottom = (int) Room_wid-(int)wid;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
-
-                return new int[]{left, top, right, bottom};
-            }
-            else
-            {
-                return new int[]{left, top, right, bottom};
+                    return new int[]{left, top, right, bottom};
+                default:
+                    return new int[]{left, top, right, bottom};
             }
 
 
@@ -364,100 +351,81 @@ public class Main3Activity extends AppCompatActivity {
         }
 
         public int[] setCup(float len, float wid) {
-            if(c.equals ("topleft"))
-            {
-                left = 0;
-                top = 0;
-                right = (int) len;
-                bottom = (int) wid;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+            switch (c) {
+                case "topleft":
+                    left = 0;
+                    top = 0;
+                    right = (int) len;
+                    bottom = (int) wid;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(c.equals ("topcenter"))
-            {
-                left =(int)Room_len/4;
-                top = 0;
-                right = (int) len+Room_len/4;
-                bottom = (int) wid;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "topcenter":
+                    left = Room_len / 4;
+                    top = 0;
+                    right = (int) len + Room_len / 4;
+                    bottom = (int) wid;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(c.equals ("topright"))
-            {
-                left =(int) Room_len- (int)len;
-                top = 0;
-                right = (int) Room_len;
-                bottom = (int) wid;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "topright":
+                    left = Room_len - (int) len;
+                    top = 0;
+                    right = Room_len;
+                    bottom = (int) wid;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(c.equals ("leftcenter"))
-            {
-                left =(int) 0;
-                top = (int)Room_wid/4;
-                right = (int) len;
-                bottom = (int) wid+Room_wid/4;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "leftcenter":
+                    left = 0;
+                    top = Room_wid / 4;
+                    right = (int) len;
+                    bottom = (int) wid + Room_wid / 4;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(c.equals ("center"))
-            {
-                left = Room_len/4;
-                top = Room_wid/4;
-                right = (int) len+Room_len/4;
-                bottom = (int) wid+Room_wid/4;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "center":
+                    left = Room_len / 4;
+                    top = Room_wid / 4;
+                    right = (int) len + Room_len / 4;
+                    bottom = (int) wid + Room_wid / 4;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
+                    return new int[]{left, top, right, bottom};
+                case "rightcenter":
+                    left = Room_len - (int) len;
+                    top = Room_wid / 4;
+                    right = Room_len;
+                    bottom = (int) wid + Room_wid / 4;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-            else if(c.equals ("rightcenter"))
-            {
-                left =(int)Room_len-(int)len;
-                top =(int)Room_wid/4;
-                right = (int) Room_len;
-                bottom = (int) wid+Room_wid/4;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "bottomleft":
+                    left = 0;
+                    top = Room_wid - (int) wid;
+                    right = (int) len;
+                    bottom = Room_wid;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(c.equals ("bottomleft"))
-            {
-                left =(int) 0;
-                top = (int)Room_wid-(int)wid;
-                right = (int)len;
-                bottom = (int) Room_wid;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "bottomcenter":
+                    left = Room_len / 4;
+                    top = Room_wid - (int) wid;
+                    right = Room_len / 4 + (int) len;
+                    bottom = Room_wid;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(c.equals ("bottomcenter"))
-            {
-                left =(int)Room_len/4;
-                top = (int)Room_wid-(int)wid;
-                right = (int)Room_len/4+(int)len;
-                bottom = (int)Room_wid;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "bottomright":
+                    left = Room_len;
+                    top = Room_wid;
+                    right = Room_len - (int) len;
+                    bottom = Room_wid - (int) wid;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(c.equals ("bottomright"))
-            {
-                left =(int) Room_len;
-                top = Room_wid;
-                right = (int)Room_len-(int) len;
-                bottom = (int) Room_wid-(int)wid;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
-
-                return new int[]{left, top, right, bottom};
-            }
-            else
-            {
-                return new int[]{left, top, right, bottom};
+                    return new int[]{left, top, right, bottom};
+                default:
+                    return new int[]{left, top, right, bottom};
             }
 
             /*left = (int) ( Room_len-wid);
@@ -469,100 +437,81 @@ public class Main3Activity extends AppCompatActivity {
         }
 
         public int[] setApp(float len, float wid) {
-            if(a.equals ("topleft"))
-            {
-                left = 0;
-                top = 0;
-                right = (int) len;
-                bottom = (int) wid;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+            switch (a) {
+                case "topleft":
+                    left = 0;
+                    top = 0;
+                    right = (int) len;
+                    bottom = (int) wid;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(a.equals ("topcenter"))
-            {
-                left =(int)Room_len/4;
-                top = 0;
-                right = (int) len+Room_len/4;
-                bottom = (int) wid;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "topcenter":
+                    left = Room_len / 4;
+                    top = 0;
+                    right = (int) len + Room_len / 4;
+                    bottom = (int) wid;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(a.equals ("topright"))
-            {
-                left =(int) Room_len- (int)len;
-                top = 0;
-                right = (int) Room_len;
-                bottom = (int) wid;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "topright":
+                    left = Room_len - (int) len;
+                    top = 0;
+                    right = Room_len;
+                    bottom = (int) wid;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(a.equals ("leftcenter"))
-            {
-                left =(int) 0;
-                top = (int)Room_wid/4;
-                right = (int) len;
-                bottom = (int) wid+Room_wid/4;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "leftcenter":
+                    left = 0;
+                    top = Room_wid / 4;
+                    right = (int) len;
+                    bottom = (int) wid + Room_wid / 4;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(a.equals ("center"))
-            {
-                left = Room_len/4;
-                top = Room_wid/4;
-                right = (int) len+Room_len/4;
-                bottom = (int) wid+Room_wid/4;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "center":
+                    left = Room_len / 4;
+                    top = Room_wid / 4;
+                    right = (int) len + Room_len / 4;
+                    bottom = (int) wid + Room_wid / 4;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
+                    return new int[]{left, top, right, bottom};
+                case "rightcenter":
+                    left = Room_len - (int) len;
+                    top = Room_wid / 4;
+                    right = Room_len;
+                    bottom = (int) wid + Room_wid / 4;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-            else if(a.equals ("rightcenter"))
-            {
-                left =(int)Room_len-(int)len;
-                top =(int)Room_wid/4;
-                right = (int) Room_len;
-                bottom = (int) wid+Room_wid/4;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "bottomleft":
+                    left = 0;
+                    top = Room_wid - (int) wid;
+                    right = (int) len;
+                    bottom = Room_wid;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(a.equals ("bottomleft"))
-            {
-                left =(int) 0;
-                top = (int)Room_wid-(int)wid;
-                right = (int)len;
-                bottom = (int) Room_wid;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "bottomcenter":
+                    left = Room_len / 4;
+                    top = Room_wid - (int) wid;
+                    right = Room_len / 4 + (int) len;
+                    bottom = Room_wid;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(a.equals ("bottomcenter"))
-            {
-                left =(int)Room_len/4;
-                top = (int)Room_wid-(int)wid;
-                right = (int)Room_len/4+(int)len;
-                bottom = (int)Room_wid;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
+                    return new int[]{left, top, right, bottom};
+                case "bottomright":
+                    left = Room_len;
+                    top = Room_wid;
+                    right = Room_len - (int) len;
+                    bottom = Room_wid - (int) wid;
+                    //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
 
-                return new int[]{left, top, right, bottom};
-            }
-            else if(a.equals ("bottomright"))
-            {
-                left =(int) Room_len;
-                top = Room_wid;
-                right = (int)Room_len-(int) len;
-                bottom = (int) Room_wid-(int)wid;
-                //System.out.println(" "+left+" "+top+" "+right+" "+bottom);
-
-                return new int[]{left, top, right, bottom};
-            }
-            else
-            {
-                return new int[]{left, top, right, bottom};
+                    return new int[]{left, top, right, bottom};
+                default:
+                    return new int[]{left, top, right, bottom};
             }
 
            /* left = (int) Room_len - (int) len;

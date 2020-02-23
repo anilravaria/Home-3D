@@ -1,24 +1,25 @@
 package com.example.mypc.homelayoutgenerator;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.*;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 public class DataBaseHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "ROOMDATA.db";
-    public static final String TABLE_NAME = "ROOM";
-    public static final String COL_1 = "LEN_ROOM";
-    public static final String COL_2 = "WID_ROOM";
-    public static final String COL_3 = "LEN_BED";
-    public static final String COL_4 = "WID_BED";
-    public static final String COL_5 = "LEN_CUPBOARD";
-    public static final String COL_6 = "WID_CUPBOARD";
-    public static final String COL_7 = "LEN_APPLIANCES";
-    public static final String COL_8 = "WID_APPLIANCES";
+    private static final String DATABASE_NAME = "ROOMDATA.db";
+    private static final String TABLE_NAME = "ROOM";
+    private static final String COL_1 = "LEN_ROOM";
+    private static final String COL_2 = "WID_ROOM";
+    private static final String COL_3 = "LEN_BED";
+    private static final String COL_4 = "WID_BED";
+    private static final String COL_5 = "LEN_CUPBOARD";
+    private static final String COL_6 = "WID_CUPBOARD";
+    private static final String COL_7 = "LEN_APPLIANCES";
+    private static final String COL_8 = "WID_APPLIANCES";
 
 
-
-    public DataBaseHelper(Context context) {
+    DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
@@ -32,7 +33,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(" DROP TABLE IF EXISTS " + TABLE_NAME);
     }
 
-    public boolean insertData(float len_room, float wid_room, float len_bed, float wid_bed, float len_cupboard, float wid_cupboard, float len_app, float wid_app) {
+    boolean insertData(float len_room, float wid_room, float len_bed, float wid_bed, float len_cupboard, float wid_cupboard, float len_app, float wid_app) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.describeContents();
@@ -47,33 +48,28 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         long result = db.insert(TABLE_NAME, null, contentValues);
         db.close();
-        if (result != -1)
-        {
-            return true;
-        }
-        else{
-            return false;
-        }
+        return result != -1;
     }
-    public Cursor getAllData()
+
+    Cursor getAllData()
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor re = db.rawQuery("SELECT * FROM "+TABLE_NAME,null);
-        return re;
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
     }
-    public boolean getLastRecord()
-    {
+
+    @SuppressLint("Recycle")
+    public boolean getLastRecord() {
         SQLiteDatabase db = this.getReadableDatabase();
         String SelQuery="SELECT * FROM "+TABLE_NAME;
-        Cursor cursor=db.rawQuery(SelQuery,null);
+        Cursor cursor;
+        cursor = db.rawQuery(SelQuery, null);
 
         return cursor.moveToLast();
     }
-    public Cursor getExcelData() {
+
+    Cursor getExcelData() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " ",
-                null);
-        return res;
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME + " ", null);
     }
 
 }
